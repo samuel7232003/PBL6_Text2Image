@@ -4,5 +4,5 @@ from ultralytics import YOLO
 model = YOLO("yolov8n.pt")
 
 def objectDetection_run(link):
-    results = model.predict(link, device='0')
+    results = model.predict(link)
     return results[0]

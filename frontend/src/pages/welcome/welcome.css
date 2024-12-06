@@ -43,3 +43,11 @@
     position: relative;
     z-index: 1;
 }
+
+.welcome figure{
+    height: 500px;
+}
+
+.welcome figure img{
+    height: 100%;
+}
