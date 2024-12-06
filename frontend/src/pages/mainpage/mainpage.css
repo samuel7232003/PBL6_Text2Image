@@ -1,0 +1,13 @@
+.mainpage{
+    height: calc(100vh - 60px);
+    background-image: url('../../images/background.png');
+    background-size: cover;
+}
+
+.mainpage .inner{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}

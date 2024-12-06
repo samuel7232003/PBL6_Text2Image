@@ -1,0 +1,45 @@
+.welcome{
+    height: calc(100vh - 60px);
+    background-image: url('../../images/background.png');
+    background-size: cover;
+}
+
+.welcome .inner{
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.welcome .infor{
+    height: 297px;
+    width: 470px;
+    padding: 20px 70px 20px 30px;
+    background-color: rgba(217, 217, 217, 0.7);
+    position: relative;
+    margin-left: 100px;
+}
+
+.welcome .infor::before{
+    content: "";
+    position: absolute;
+    height: 297px;
+    width: 470px;
+    background-color: rgba(217, 217, 217, 0.7);
+    top: -40px;
+    left: -30px;
+}
+
+.welcome .infor h2{
+    font-size: 32px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+.welcome .infor p{
+    font-size: 20px;
+    position: relative;
+    z-index: 1;
+}

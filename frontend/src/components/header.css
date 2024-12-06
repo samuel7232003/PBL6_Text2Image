@@ -1,0 +1,30 @@
+.header{
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 60px;
+    background-color: #373737;
+}
+
+.header .infor{
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+
+.header .start{
+    height: 38px;
+    width: 100px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color ease-in-out 0.25s;
+    cursor: pointer;
+}
+
+.header .start:hover{
+    background-color: #d9d9d9;
+}
