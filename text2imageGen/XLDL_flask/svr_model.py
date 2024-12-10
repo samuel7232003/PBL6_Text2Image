@@ -1,9 +1,12 @@
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 
 from objectDetection import objectDetection_run
 import uploadCloudinary
 # Khởi tạo Flask app
 app =  Flask(__name__)
+
+CORS(app)
 
 IMAGE_PATH  = "output.jpg"
 
