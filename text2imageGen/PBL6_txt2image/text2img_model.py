@@ -9,7 +9,7 @@ HEIGHT = 512
 WIDTH = 512
 
 
-def create_pipeline(model_name = "runwayml/stable-diffusion-v1-5"):
+def create_pipeline(model_name = "Daichi/realisticVisionV60B1_v51HyperVAE"):
     # Nếu máy có GPU CUDA
     if torch.cuda.is_available():
         print("Using GPU")
@@ -18,6 +18,12 @@ def create_pipeline(model_name = "runwayml/stable-diffusion-v1-5"):
             torch_dtype = torch.float16,
             use_safetensors = True
         ).to("cuda")
+        lora_weight1 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/noelLoraAI_v1-000006.safetensors"  # thêm lora tại đây
+        lora_weight2 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/vintageLoraAI.safetensors"
+        lora_weight3 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/modernLoraAI.safetensors"
+        pipeline.load_lora_weights(lora_weight1)
+        pipeline.load_lora_weights(lora_weight2)
+        pipeline.load_lora_weights(lora_weight3)
     else:
         print("Using CPU")
         pipeline = StableDiffusionPipeline.from_pretrained(
