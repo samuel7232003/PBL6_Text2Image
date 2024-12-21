@@ -8,7 +8,7 @@ GUIDANCE_SCALE = 0.75
 HEIGHT = 512
 WIDTH = 512
 
-
+# Daichi/realisticVisionV60B1_v51HyperVAE
 def create_pipeline(model_name = "Daichi/realisticVisionV60B1_v51HyperVAE"):
     # Nếu máy có GPU CUDA
     if torch.cuda.is_available():
@@ -24,6 +24,7 @@ def create_pipeline(model_name = "Daichi/realisticVisionV60B1_v51HyperVAE"):
         pipeline.load_lora_weights(lora_weight1)
         pipeline.load_lora_weights(lora_weight2)
         pipeline.load_lora_weights(lora_weight3)
+
     else:
         print("Using CPU")
         pipeline = StableDiffusionPipeline.from_pretrained(
@@ -31,6 +32,25 @@ def create_pipeline(model_name = "Daichi/realisticVisionV60B1_v51HyperVAE"):
             torch_dtype=torch.float32,
             use_safetensors=True
         )
+        lora_weight1 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/noelLoraAI_v1-000006.safetensors"  # thêm lora tại đây
+        lora_weight2 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/vintageLoraAI.safetensors"
+        lora_weight3 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/modernLoraAI.safetensors"
+        pipeline.load_lora_weights(lora_weight1)
+        pipeline.load_lora_weights(lora_weight2)
+        pipeline.load_lora_weights(lora_weight3)
+    #
+    # print("Using CPU")
+    # pipeline = StableDiffusionPipeline.from_pretrained(
+    #     model_name,
+    #     torch_dtype=torch.float32,
+    #     use_safetensors=True
+    # )
+    # lora_weight1 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/noelLoraAI_v1-000006.safetensors"  # thêm lora tại đây
+    # lora_weight2 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/vintageLoraAI.safetensors"
+    # lora_weight3 = "C:/Users/Huy/Documents/GitHub/PBL6_Text2Image/text2imageGen/model/modernLoraAI.safetensors"
+    # pipeline.load_lora_weights(lora_weight1)
+    # pipeline.load_lora_weights(lora_weight2)
+    # pipeline.load_lora_weights(lora_weight3)
     return pipeline
 
 def text2img(prompt, pipeline):
@@ -43,6 +63,7 @@ def text2img(prompt, pipeline):
         height = HEIGHT,
         width = WIDTH
     ).images
+
 
     return images[0]
 
