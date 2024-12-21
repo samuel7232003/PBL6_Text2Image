@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from text2img_model import create_pipeline, text2img
@@ -33,7 +35,16 @@ def index():
     # Lấy văn bản từ dữ liệu JSON
     prompt = data.get("prompt", "")
 
-    translated_text = translate_text(prompt, src_lang='vi', dest_lang='en')
+    # Tách các đoạn bắt đầu bằng < và kết thúc bằng >
+    tags = re.findall(r'<.*?>', prompt)
+
+    # Loại bỏ các đoạn đã tách ra khỏi chuỗi gốc
+    text_without_tags = re.sub(r'<.*?>', '', prompt)
+
+    # Loại bỏ các khoảng trắng dư thừa, chỉ giữ lại phần văn bản
+    text_without_tags = ' '.join(text_without_tags.split())
+
+    translated_text = translate_text(text_without_tags, src_lang='vi', dest_lang='en')
 
     # Đảm bảo đầu ra được in với UTF-8
     sys.stdout.reconfigure(encoding='utf-8')
@@ -44,6 +55,7 @@ def index():
     keywords = r.get_ranked_phrases()
 
     prompt2 = ', '.join(keywords)
+    prompt2 = prompt2 + ", " + ", ".join(tags)
     print("Key words: ", prompt2)
 
     print("Start gen....")

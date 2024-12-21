@@ -49,8 +49,9 @@ export default function MainPage(){
                             <p>Khung ý tưởng</p>
                         </div>
                         <div className="content">
-                            <p onClick={() => setTextPrompt(textPrompt +" <lora:noelLoraAI_v1:0.6>, ")}>Noel Lora</p>
+                            <p onClick={() => setTextPrompt(textPrompt +" <lora:noelLoraAI_v1-000006:0.6>, ")}>Noel Lora</p>
                             <p onClick={() => setTextPrompt(textPrompt +" <lora:vintageLoraAI:0.6>, ")}>Vintage Lora</p>
+                            <p onClick={() => setTextPrompt(textPrompt +" <lora:modernLoraAI:0.6>, ")}>Modern Lora</p>
                         </div>
                     </div>
                 </div>
