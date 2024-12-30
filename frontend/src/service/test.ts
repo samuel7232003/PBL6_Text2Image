@@ -1,8 +1,9 @@
 import { apiInstance } from "./api";
 
-export async function testApi(image:string):Promise<any> {
+export async function testApi(textPrompt:string, style:string):Promise<any> {
     const data = {
-        prompt: image
+        prompt: textPrompt,
+        style: style
     }
     try{
         const respone = await apiInstance.post("/genImg", data);

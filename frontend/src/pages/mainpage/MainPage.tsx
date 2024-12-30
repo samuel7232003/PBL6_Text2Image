@@ -3,15 +3,32 @@ import { useOutletContext } from "react-router-dom"
 import './mainpage.css'
 import { testApi } from "../../service/test";
 import { message, Spin } from "antd";
-import icon from './Fire.png'
+import icon from './images/Fire.png';
+import tet_img from './images/tet (2).png'
+import modern_img from './images/modern (3).png'
+import vintage_img from './images/coffee_vintage (8).png'
+import halloween_img from "./images/haloween (6).png"
+import noel_img from './images/noel (4).png'
+import { modern_tags } from "../../data/modern_tags";
+import { noel_tags } from "../../data/noel_tags";
+import { tet_tags } from "../../data/tet_tags";
+import { vintage_tags } from "../../data/vintage_tags";
+import { halloween_tags } from "../../data/halloween_tags";
 
 export default function MainPage(){
+    const styles = ["Giáng sinh", "Hiện đại", "Tết truyền thống", "Vintage", "Halloween"];
+    const styles_en = ["noel", "modern", "tet", "vintage", "halloween"];
+    const imgs = [noel_img, modern_img, tet_img, vintage_img, halloween_img];
+    const list_modern = [noel_tags, modern_tags, tet_tags, vintage_tags, halloween_tags];
     const {setIsStart}:any = useOutletContext();
 
+    const [list, setList] = useState(list_modern[0]);
     const [image, setImage] = useState("");
     const [textPrompt, setTextPrompt] = useState("");
+    const [style, setStyle] = useState("");
     const [loading, setLoading] = useState(false);
 
+    
     useEffect(() => {
         setIsStart(true);
         // eslint-disable-next-line
@@ -24,7 +41,7 @@ export default function MainPage(){
             setLoading(true);
             const fetchData = async () =>{
                 try {
-                    const res = await testApi(textPrompt);
+                    const res = await testApi(textPrompt, style);
                     setImage(res.url);
                 } catch (error) {
                     console.log(error);
@@ -38,6 +55,20 @@ export default function MainPage(){
         if(image !=="") setLoading(false);
     }, [image])
 
+    function addPrompt(add: string){
+        setTextPrompt(textPrompt + " " + add + ",");
+    }
+
+    function onChoiceStyles(index: number){
+        if(style === styles_en[index]) {
+            setStyle("");
+        }
+        else{
+            setStyle(styles_en[index]);
+            setList(list_modern[index])
+        }
+    }
+
     return(
         <div className="mainpage">
             <div className="inner">
@@ -49,10 +80,23 @@ export default function MainPage(){
                             <p>Khung ý tưởng</p>
                         </div>
                         <div className="content">
-                            <p onClick={() => setTextPrompt(textPrompt +" <lora:noelLoraAI_v1-000006:0.6>, ")}>Noel Lora</p>
-                            <p onClick={() => setTextPrompt(textPrompt +" <lora:vintageLoraAI:0.6>, ")}>Vintage Lora</p>
-                            <p onClick={() => setTextPrompt(textPrompt +" <lora:modernLoraAI:0.6>, ")}>Modern Lora</p>
+                            <div>
+                                {styles.map((value, index) => 
+                                    <div className={style===styles_en[index]?"select":""} onClick={() => {setStyle(styles_en[index]); setList(list_modern[index])}}>
+                                        <figure><img src={imgs[index]} alt="" /></figure>
+                                        <p>{value}</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+                        <div className="list_tips">
+                            <ul>
+                                {list.map(index => 
+                                    <li onClick={() => addPrompt(index)}>{index}</li>
+                                )}
+                            </ul>
+                        </div>
+                        
                     </div>
                 </div>
                 <div className="to">
