@@ -1,5 +1,1 @@
-flask
-torch
-diffusers
-transformers
-accelerate
+flask torch diffusers transformers accelerate cloudinary flask_cors googletrans rake_nltk PEFT googletrans==4.0.0-rc1
