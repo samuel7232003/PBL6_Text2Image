@@ -7,7 +7,7 @@ export default function Home(){
 
     return (
         <div>
-            <Header isStart={isStart}/>
+            {/* <Header isStart={isStart}/> */}
             <div>
                 <Outlet context={{setIsStart}}/>
             </div>

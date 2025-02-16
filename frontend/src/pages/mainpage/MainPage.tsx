@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom"
 import './mainpage.css'
 import { testApi } from "../../service/test";
-import { message, Spin } from "antd";
+import { message, Progress, Spin } from "antd";
 import icon from './images/Fire.png';
 import tet_img from './images/tet (2).png'
 import modern_img from './images/modern (3).png'
@@ -27,6 +27,7 @@ export default function MainPage(){
     const [textPrompt, setTextPrompt] = useState("");
     const [style, setStyle] = useState("");
     const [loading, setLoading] = useState(false);
+    const [percent, setPercent] = useState<number>(1);
 
     
     useEffect(() => {
@@ -34,11 +35,26 @@ export default function MainPage(){
         // eslint-disable-next-line
     }, [])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPercent((prevCount) => {
+            if (prevCount >= 100) {
+              clearInterval(interval); 
+              return 100;
+            }
+            return prevCount + 1;
+          });
+        }, 350);
+    
+        return () => clearInterval(interval);
+      }, [loading]);
+
     function handleGen(){
         if(textPrompt.trim() === "") message.info("Vui lòng nhập mô tả!");
         else{
             message.loading("Đang tiến hành xử lí!");
             setLoading(true);
+            setPercent(1);
             const fetchData = async () =>{
                 try {
                     const res = await testApi(textPrompt, style);
@@ -82,7 +98,7 @@ export default function MainPage(){
                         <div className="content">
                             <div>
                                 {styles.map((value, index) => 
-                                    <div className={style===styles_en[index]?"select":""} onClick={() => {setStyle(styles_en[index]); setList(list_modern[index])}}>
+                                    <div className={style===styles_en[index]?"select":""} onClick={() => onChoiceStyles(index)}>
                                         <figure><img src={imgs[index]} alt="" /></figure>
                                         <p>{value}</p>
                                     </div>
@@ -107,7 +123,7 @@ export default function MainPage(){
                         image==="" ? <p>Ảnh sẽ được sinh ra ở đây</p>
                         :<figure><img src={image} alt="" /></figure>
                     : <div className="mess">
-                        <Spin tip="Xử lí..." size="large"/>
+                        <Progress percent={percent} type="circle" />
                         <p>Hệ thống đang xử lí! Vui lòng chờ ...</p>
                     </div>}
                 </div>
